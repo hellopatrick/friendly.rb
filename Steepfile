@@ -1,4 +1,4 @@
-# D = Steep::Diagnostic
+D = Steep::Diagnostic
 #
 # target :lib do
 #   signature "sig"
@@ -30,5 +30,5 @@ target :app do
   check "lib"
   signature "sig"
 
-  library "socket", "pathname", "set"
+  library "socket"
 end

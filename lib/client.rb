@@ -30,7 +30,7 @@ class Client
     begin
       res = CommandParser.decode(io)
       pos = io.pos
-      @buf = @buf[pos..]
+      @buf = @buf[pos..] || ""
       res
     rescue Incomplete => e
       nil

@@ -1,0 +1,11 @@
+class Server
+  @port : Integer
+  @store : Hash[String, String]
+  @clients: Hash[TCPSocket, Client]
+
+  def initialize: (untyped port) -> void
+
+  def start: () -> untyped
+
+  def exec: (untyped command) -> untyped
+end

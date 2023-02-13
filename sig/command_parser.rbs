@@ -1,0 +1,10 @@
+class Incomplete < StandardError
+end
+
+module CommandParser
+  CRLF: "\r\n"
+
+  def self.read_complete_line: (untyped io) -> untyped
+
+  def self.decode: (untyped io) -> untyped
+end
