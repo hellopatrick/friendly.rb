@@ -2,14 +2,13 @@
 
 source "https://rubygems.org"
 
-group :development do
-  gem "ruby-lsp", require: false
-  gem 'sorbet'
-  gem 'tapioca', require: false
-end
-
 group :test do
   gem "minitest", "~> 5.17"
 end
 
-gem 'sorbet-runtime'
+group :development do
+  gem "rbs", "~> 2.8"
+  gem "rake", "~> 13.0"
+  gem "steep", "~> 1.3"
+end
+

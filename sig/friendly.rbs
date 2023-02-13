@@ -1,0 +1,31 @@
+class Incomplete < StandardError
+end
+
+class Client
+  CRLF: "\r\n"
+
+  def initialize: (untyped socket) -> void
+
+  def read_some: (?::Integer cnt) -> (true | false)
+
+  def consume: () -> untyped
+end
+
+class Incomplete < StandardError
+end
+
+module CommandParser
+  CRLF: "\r\n"
+
+  def self.read_complete_line: (untyped io) -> untyped
+
+  def self.decode: (untyped io) -> untyped
+end
+
+class Server
+  def initialize: (untyped port) -> void
+
+  def start: () -> untyped
+
+  def exec: (untyped command) -> ("-invalid\r\n" | untyped)
+end

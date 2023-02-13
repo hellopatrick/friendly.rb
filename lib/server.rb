@@ -1,8 +1,6 @@
-# typed: true
-
 require "socket"
 
-require_relative "client"
+require "./lib/client"
 
 class Server
   def initialize(port)
