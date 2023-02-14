@@ -1,11 +1,13 @@
 class Server
-  @port : Integer
-  @store : Hash[String, String]
+  @server: TCPServer
+  @store: Hash[String, String]
   @clients: Hash[TCPSocket, Client]
 
-  def initialize: (untyped port) -> void
+  def initialize: (?Integer port) -> void
 
-  def start: () -> untyped
+  def start: () -> void
 
-  def exec: (untyped command) -> untyped
+  def clean: (TCPSocket) -> void
+
+  def exec: (untyped command) -> String
 end

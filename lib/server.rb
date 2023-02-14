@@ -3,26 +3,23 @@ require "socket"
 require "./lib/client"
 
 class Server
-  def initialize(port)
-    @port = port
+  def initialize(port=6379)
+    @server = TCPServer.new("0.0.0.0", port)
 
     @clients = {}
-
     @store = {}
   end
 
   def start
-    server = TCPServer.new(@port)
-
     loop do
-      sockets = [server, *@clients.keys]
+      sockets = [@server, *@clients.keys]
       ready, _, _ = IO.select(sockets)
 
       next if ready.nil?
 
       ready.each do |socket|
-        if socket == server
-          sock = server.accept
+        if socket == @server
+          sock = @server.accept
           @clients[sock] = Client.new(sock)
         else
           client = @clients[socket]
@@ -30,27 +27,33 @@ class Server
           eof = client.read_some
 
           if eof
-            socket.close
-            @clients.delete(socket)
+            clean(socket)
             next
           end
 
           loop do
-            cmd = client.consume
-            break unless cmd
-
-            p cmd
-            resp = exec(cmd)
-            socket.write resp
+            begin
+              cmd = client.consume
+              break if cmd.nil? || cmd.empty?
+              resp = exec(cmd)
+              socket.write resp
+            rescue => e
+              clean(socket)
+            end
           end
         end
       end
     end
   end
 
+  def clean(socket)
+    socket.close
+    @clients.delete(socket)
+  end
+
   def exec(command)
     cmd = command[0].upcase
-    args = command[1..]
+    args = command[1..] || []
 
     case cmd
     when "PING"

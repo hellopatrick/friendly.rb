@@ -1,12 +1,13 @@
+class Invalid < StandardError
+end
+
 class Client
   @socket: TCPSocket
   @buf: String
-
-  CRLF: "\r\n"
 
   def initialize: (TCPSocket socket) -> void
 
   def read_some: (?::Integer cnt) -> (true | false)
 
-  def consume: () -> (Array[String] | String | Integer)
+  def consume: () -> (Array[command])
 end

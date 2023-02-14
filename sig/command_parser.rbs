@@ -1,10 +1,12 @@
 class Incomplete < StandardError
 end
 
+type command = String | Integer | nil | Array[command]
+
 module CommandParser
-  CRLF: "\r\n"
+  CRLF: String
 
-  def self.read_complete_line: (untyped io) -> untyped
+  def self.read_complete_line: (StringIO io) -> String
 
-  def self.decode: (untyped io) -> untyped
+  def self.decode: (StringIO io) -> command
 end

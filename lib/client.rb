@@ -2,12 +2,9 @@ require "stringio"
 
 require "./lib/command_parser"
 
-class Incomplete < StandardError
-end
+class Invalid < StandardError; end
 
 class Client
-  CRLF = "\r\n"
-
   def initialize(socket)
     @socket = socket
     @buf = ""
@@ -29,11 +26,15 @@ class Client
 
     begin
       res = CommandParser.decode(io)
+
       pos = io.pos
       @buf = @buf[pos..] || ""
+
+      raise Invalid unless res.is_a? Array
+
       res
     rescue Incomplete => e
-      nil
+      []
     end
   end
 end
